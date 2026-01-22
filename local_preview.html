@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <!-- Font Inter from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet Content (Inlined) -->
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            /* Indigo 600 */
+            --primary-light: #e0e7ff;
+            /* Indigo 100 */
+            --text-main: #1f2937;
+            /* Gray 800 */
+            --text-muted: #6b7280;
+            /* Gray 500 */
+            --bg-color: #f3f4f6;
+            /* Gray 100 */
+            --sidebar-bg: #ffffff;
+            --sidebar-width: 280px;
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.02);
+            z-index: 10;
+            transition: width var(--transition-speed) ease;
+        }
+
+        .logo-container {
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #4f46e5 0%, #818cf8 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-container {
+            padding: 24px 16px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .nav-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 12px;
+            padding-left: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            margin-bottom: 4px;
+            border-radius: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .nav-item svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2px;
+        }
+
+        /* User Profile at Bottom */
+        .user-profile {
+            padding: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.03);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e5e7eb;
+            background-image: url('https://ui-avatars.com/api/?name=Admin+User&background=random');
+            background-size: cover;
+        }
+
+        .user-info h4 {
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .user-info p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 32px;
+            overflow-y: auto;
+            background-color: #fafafa;
+        }
+
+        .header {
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+        }
+
+        /* Responsive Mobile Toggle */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -100%;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+        }
+
+        /* Dashboard Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .stat-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .stat-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke-width: 2;
+        }
+
+        /* Card Variants */
+        .card-blue .stat-icon {
+            background-color: #eff6ff;
+            color: #3b82f6;
+        }
+
+        .card-indigo .stat-icon {
+            background-color: #eef2ff;
+            color: #6366f1;
+        }
+
+        .card-emerald .stat-icon {
+            background-color: #ecfdf5;
+            color: #10b981;
+        }
+
+        .card-amber .stat-icon {
+            background-color: #fffbeb;
+            color: #f59e0b;
+        }
+
+        .card-rose .stat-icon {
+            background-color: #fff1f2;
+            color: #f43f5e;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar Content (Inlined) -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo-container">
+            <div class="logo-icon">
+                <!-- Logo placeholder SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                </svg>
+            </div>
+            <div class="logo-text">SertifikasiApp</div>
+        </div>
+
+        <div class="nav-container">
+            <div class="nav-label">Menu Utama</div>
+
+            <a href="javascript:void(0)" class="nav-item active"
+                onclick="setActive(this, 'Dashboard', 'page-dashboard', event)">
+                <!-- Dashboard Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="javascript:void(0)" class="nav-item"
+                onclick="setActive(this, 'Data Sertifikat', 'page-data-sertifikat', event)">
+                <!-- Award/Certificate Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                </svg>
+                <span>Data Sertifikat</span>
+            </a>
+
+            <!-- Data Sertifikasi / LAT -->
+            <a href="javascript:void(0)" class="nav-item"
+                onclick="setActive(this, 'Data Sertifikasi / LAT', 'page-data-sertifikasi-lat', event)">
+                <!-- Graduation Cap/Learning Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                </svg>
+                <span>Data Sertifikasi / LAT</span>
+            </a>
+
+            <div class="nav-label" style="margin-top: 24px;">Laporan & Analisis</div>
+
+            <a href="javascript:void(0)" class="nav-item" onclick="setActive(this, 'Analisis', 'page-analisis', event)">
+                <!-- Bar Chart/Analysis Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
+                <span>Analisis</span>
+            </a>
+
+            <a href="javascript:void(0)" class="nav-item" onclick="setActive(this, 'Laporan', 'page-laporan', event)">
+                <!-- File Text/Report Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                <span>Laporan</span>
+            </a>
+
+            <div class="nav-label" style="margin-top: 24px;">Sistem</div>
+
+            <a href="javascript:void(0)" class="nav-item"
+                onclick="setActive(this, 'Pengaturan', 'page-pengaturan', event)">
+                <!-- Settings Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                    </path>
+                </svg>
+                <span>Pengaturan</span>
+            </a>
+        </div>
+
+        <div class="user-profile">
+            <div class="avatar"></div>
+            <div class="user-info">
+                <h4>Admin</h4>
+                <p>Administrator</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-toggle" onclick="toggleSidebar()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </div>
+
+    <script>
+        function setActive(element, pageName, targetId, event) {
+            if (event) {
+                event.preventDefault();
+            }
+
+            // Remove active class from all items
+            const items = document.querySelectorAll('.nav-item');
+            items.forEach(item => item.classList.remove('active'));
+
+            // Add active class to clicked item
+            element.classList.add('active');
+
+            // Update dashboard content title
+            const titleEl = document.getElementById('page-title');
+            const descEl = document.getElementById('page-description');
+
+            if (titleEl) titleEl.innerText = pageName;
+
+            let desc = 'Mengelola ' + pageName;
+            if (pageName === 'Dashboard') desc = 'Ringkasan Aktivitas dan Statistik Sertifikasi';
+            if (descEl) descEl.innerText = desc;
+
+            // Hide all content sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.style.display = 'none');
+
+            // Show the target section
+            if (targetId) {
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                }
+            }
+
+            // Close sidebar ONLY on mobile screens (less than or equal to 768px)
+            if (window.innerWidth <= 768) {
+                // Small timeout to allow the user to see the click effect
+                setTimeout(() => {
+                    const sidebar = document.getElementById('sidebar');
+                    if (sidebar && sidebar.classList.contains('open')) {
+                        toggleSidebar();
+                    }
+                }, 100);
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+    </script>
+
+    <!-- Main Content Area (Index.html content) -->
+    <div class="main-content">
+        <!-- Header always visible -->
+        <div class="header">
+            <h1 id="page-title">Dashboard</h1>
+            <p id="page-description">Ringkasan Aktivitas dan Statistik Sertifikasi</p>
+        </div>
+
+        <!-- PAGE: DASHBOARD -->
+        <div id="page-dashboard" class="content-section">
+            <div class="stats-grid">
+                <!-- Total Karyawan -->
+                <div class="stat-card card-blue">
+                    <div class="stat-content">
+                        <span class="stat-label">Total Karyawan</span>
+                        <span class="stat-value" id="stat-total-karyawan">0</span>
+                    </div>
+                    <div class="stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Total Sertifikat -->
+                <div class="stat-card card-indigo">
+                    <div class="stat-content">
+                        <span class="stat-label">Total Sertifikat</span>
+                        <span class="stat-value" id="stat-total-sertifikat">0</span>
+                    </div>
+                    <div class="stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Sertifikat Aktif -->
+                <div class="stat-card card-emerald">
+                    <div class="stat-content">
+                        <span class="stat-label">Sertifikat Aktif</span>
+                        <span class="stat-value" id="stat-sertifikat-aktif">0</span>
+                    </div>
+                    <div class="stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Segera Kedaluwarsa -->
+                <div class="stat-card card-amber">
+                    <div class="stat-content">
+                        <span class="stat-label">Segera Kedaluwarsa</span>
+                        <span class="stat-value" id="stat-segera-kedaluwarsa">0</span>
+                    </div>
+                    <div class="stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                            </path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Sudah Kedaluwarsa -->
+                <div class="stat-card card-rose">
+                    <div class="stat-content">
+                        <span class="stat-label">Sudah Kedaluwarsa</span>
+                        <span class="stat-value" id="stat-sudah-kedaluwarsa">0</span>
+                    </div>
+                    <div class="stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-data-sertifikat" class="content-section" style="display: none;">
+            <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
+                <!-- Card Sertifikasi -->
+                <div class="stat-card card-blue" style="cursor: pointer;" onclick="// Add logic if needed later">
+                    <div class="stat-content">
+                        <span class="stat-label">Perencanaan</span>
+                        <span class="stat-value" style="font-size: 24px;">Sertifikasi</span>
+                    </div>
+                    <div class="stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Card LAT -->
+                <div class="stat-card card-emerald" style="cursor: pointer;" onclick="// Add logic if needed later">
+                    <div class="stat-content">
+                        <span class="stat-label">Perencanaan</span>
+                        <span class="stat-value" style="font-size: 24px;">LAT</span>
+                    </div>
+                    <div class="stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: DATA SERTIFIKASI / LAT -->
+        <div id="page-data-sertifikasi-lat" class="content-section" style="display: none;">
+            <div
+                style="padding: 40px; border: 2px dashed #ec4899; border-radius: 16px; display: flex; align-items: center; justify-content: center; height: 400px; color: #ec4899; background-color: #fce7f3; text-align: center;">
+                <div>
+                    <h3 style="margin-bottom: 8px; font-weight: 500;">Data Sertifikasi / LAT</h3>
+                    <p style="font-size: 14px;">Data sertifikasi dan LAT akan ditampilkan di sini.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: ANALISIS -->
+        <div id="page-analisis" class="content-section" style="display: none;">
+            <div
+                style="padding: 40px; border: 2px dashed #f59e0b; border-radius: 16px; display: flex; align-items: center; justify-content: center; height: 400px; color: #f59e0b; background-color: #fffbeb; text-align: center;">
+                <div>
+                    <h3 style="margin-bottom: 8px; font-weight: 500;">Analisis Data</h3>
+                    <p style="font-size: 14px;">Grafik dan visualisasi data akan ditampilkan di sini.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: LAPORAN -->
+        <div id="page-laporan" class="content-section" style="display: none;">
+            <div
+                style="padding: 40px; border: 2px dashed #6366f1; border-radius: 16px; display: flex; align-items: center; justify-content: center; height: 400px; color: #6366f1; background-color: #eef2ff; text-align: center;">
+                <div>
+                    <h3 style="margin-bottom: 8px; font-weight: 500;">Laporan</h3>
+                    <p style="font-size: 14px;">Menu untuk mengunduh laporan.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: PENGATURAN -->
+        <div id="page-pengaturan" class="content-section" style="display: none;">
+            <div
+                style="padding: 40px; border: 2px dashed #8b5cf6; border-radius: 16px; display: flex; align-items: center; justify-content: center; height: 400px; color: #8b5cf6; background-color: #f5f3ff; text-align: center;">
+                <div>
+                    <h3 style="margin-bottom: 8px; font-weight: 500;">Pengaturan Sistem</h3>
+                    <p style="font-size: 14px;">Konfigurasi aplikasi.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

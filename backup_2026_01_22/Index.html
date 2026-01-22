@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <!-- Font Inter from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <?!= include('Stylesheet'); ?>
+</head>
+
+<body>
+    <?!= include('Sidebar'); ?>
+
+    <div class="main-content">
+        <!-- Header always visible -->
+        <div class="header">
+            <h1 id="page-title">Dashboard</h1>
+            <p id="page-description">Ringkasan Aktivitas dan Statistik Sertifikasi</p>
+        </div>
+
+        <!-- PAGE: DASHBOARD -->
+        <div id="page-dashboard" class="content-section">
+            <div
+                style="padding: 40px; border: 2px dashed #3b82f6; border-radius: 16px; display: flex; align-items: center; justify-content: center; height: 400px; color: #3b82f6; background-color: #eff6ff; text-align: center;">
+                <div>
+                    <h3 style="margin-bottom: 8px; font-weight: 500;">Dashboard Landing</h3>
+                    <p style="font-size: 14px;">Selamat datang di Sistem Informasi Sertifikasi.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: DATA SERTIFIKAT -->
+        <div id="page-data-sertifikat" class="content-section" style="display: none;">
+            <div
+                style="padding: 40px; border: 2px dashed #10b981; border-radius: 16px; display: flex; align-items: center; justify-content: center; height: 400px; color: #10b981; background-color: #ecfdf5; text-align: center;">
+                <div>
+                    <h3 style="margin-bottom: 8px; font-weight: 500;">Data Sertifikat</h3>
+                    <p style="font-size: 14px;">Tabel data sertifikat akan ditampilkan di sini.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: DATA SERTIFIKASI / LAT -->
+        <div id="page-data-sertifikasi-lat" class="content-section" style="display: none;">
+            <div
+                style="padding: 40px; border: 2px dashed #ec4899; border-radius: 16px; display: flex; align-items: center; justify-content: center; height: 400px; color: #ec4899; background-color: #fce7f3; text-align: center;">
+                <div>
+                    <h3 style="margin-bottom: 8px; font-weight: 500;">Data Sertifikasi / LAT</h3>
+                    <p style="font-size: 14px;">Data sertifikasi dan LAT akan ditampilkan di sini.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: ANALISIS -->
+        <div id="page-analisis" class="content-section" style="display: none;">
+            <div
+                style="padding: 40px; border: 2px dashed #f59e0b; border-radius: 16px; display: flex; align-items: center; justify-content: center; height: 400px; color: #f59e0b; background-color: #fffbeb; text-align: center;">
+                <div>
+                    <h3 style="margin-bottom: 8px; font-weight: 500;">Analisis Data</h3>
+                    <p style="font-size: 14px;">Grafik dan visualisasi data akan ditampilkan di sini.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: LAPORAN -->
+        <div id="page-laporan" class="content-section" style="display: none;">
+            <div
+                style="padding: 40px; border: 2px dashed #6366f1; border-radius: 16px; display: flex; align-items: center; justify-content: center; height: 400px; color: #6366f1; background-color: #eef2ff; text-align: center;">
+                <div>
+                    <h3 style="margin-bottom: 8px; font-weight: 500;">Laporan</h3>
+                    <p style="font-size: 14px;">Menu untuk mengunduh laporan.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: PENGATURAN -->
+        <div id="page-pengaturan" class="content-section" style="display: none;">
+            <div
+                style="padding: 40px; border: 2px dashed #8b5cf6; border-radius: 16px; display: flex; align-items: center; justify-content: center; height: 400px; color: #8b5cf6; background-color: #f5f3ff; text-align: center;">
+                <div>
+                    <h3 style="margin-bottom: 8px; font-weight: 500;">Pengaturan Sistem</h3>
+                    <p style="font-size: 14px;">Konfigurasi aplikasi.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
