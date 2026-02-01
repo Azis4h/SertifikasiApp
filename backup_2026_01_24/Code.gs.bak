@@ -1,0 +1,94 @@
+function doGet() {
+  return HtmlService.createTemplateFromFile('Index')
+      .evaluate()
+      .setTitle('Sistem Informasi Sertifikasi')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+      .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+}
+
+function include(filename) {
+  return HtmlService.createHtmlOutputFromFile(filename)
+      .getContent();
+}
+
+/**
+ * CRUD LOGIC using PropertiesService (Mock Database)
+ */
+function getScriptProperties() {
+  return PropertiesService.getScriptProperties();
+}
+
+function getData() {
+  // Try to load from properties first
+  try {
+    var stored = getScriptProperties().getProperty('CERT_DATA_V2');
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch (e) {
+    console.error('Error reading properties', e);
+  }
+
+  // Fallback / Initial Mock Data
+  return [
+      { id: '1', sap: '5252', nama: 'Mardiyah', posCode: 'POS-01', itemId: 'CERT-01', judul: 'Project Management Pro', periode: 'Jan 2026', statusAnggaran: 'Tersedia', jumlah: '15.000.000', mandatory: 'MANDATORY', resiko: 'Low' },
+      { id: '2', sap: '5252', nama: 'Mardiyah', posCode: 'POS-01', itemId: 'CERT-02', judul: 'Scrum Master', periode: 'Feb 2026', statusAnggaran: 'Tersedia', jumlah: '10.000.000', mandatory: 'REGULASI', resiko: 'Low' },
+      { id: '3', sap: '5253', nama: 'Ahmad Rizki', posCode: 'POS-02', itemId: 'CERT-03', judul: 'Cloud Architect', periode: 'Feb 2026', statusAnggaran: 'Tersedia', jumlah: '8.000.000', mandatory: 'REGULASI', resiko: 'Medium' },
+      { id: '4', sap: '5254', nama: 'Siti Nurhaliza', posCode: 'POS-03', itemId: 'CERT-04', judul: 'HR Professional', periode: 'Mar 2026', statusAnggaran: 'Tidak Tersedia', jumlah: '5.500.000', mandatory: 'MANDATORY', resiko: 'High' },
+      { id: '5', sap: '5254', nama: 'Siti Nurhaliza', posCode: 'POS-03', itemId: 'CERT-05', judul: 'People Analytics', periode: 'Mar 2026', statusAnggaran: 'Tersedia', jumlah: '3.500.000', mandatory: 'REGULASI', resiko: 'Medium' }
+  ];
+}
+
+function getEmployeeData() {
+  return getData();
+}
+
+function addData(formObject) {
+  var data = getData();
+  var newRow = {
+    id: new Date().getTime().toString(),
+    sap: formObject.sap,
+    nama: formObject.nama,
+    posCode: formObject.posCode,
+    itemId: formObject.itemId,
+    judul: formObject.judul,
+    periode: formObject.periode,
+    statusAnggaran: formObject.statusAnggaran,
+    jumlah: formObject.jumlah,
+    mandatory: formObject.mandatory,
+    resiko: formObject.resiko
+  };
+  data.push(newRow);
+  getScriptProperties().setProperty('CERT_DATA_V2', JSON.stringify(data));
+  return data;
+}
+
+function updateData(formObject) {
+  var data = getData();
+  var index = data.findIndex(function(r) { return r.id === formObject.id; });
+  if (index !== -1) {
+    data[index] = {
+      id: formObject.id,
+      sap: formObject.sap,
+      nama: formObject.nama,
+      posCode: formObject.posCode,
+      itemId: formObject.itemId,
+      judul: formObject.judul,
+      periode: formObject.periode,
+      statusAnggaran: formObject.statusAnggaran,
+      jumlah: formObject.jumlah,
+      mandatory: formObject.mandatory,
+      resiko: formObject.resiko
+    };
+    getScriptProperties().setProperty('CERT_DATA_V2', JSON.stringify(data));
+  }
+  return data;
+}
+
+function deleteData(id) {
+  var data = getData();
+  var filtered = data.filter(function(r) { return r.id !== id; });
+  getScriptProperties().setProperty('CERT_DATA_V2', JSON.stringify(filtered));
+  return filtered;
+}
+// End of file
