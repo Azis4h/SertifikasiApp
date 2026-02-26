@@ -1,163 +1,102 @@
-<div class="sidebar" id="sidebar">
-    <div class="logo-container">
-        <div class="logo-icon">
-            <!-- Logo placeholder SVG -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                <path d="M2 17l10 5 10-5" />
-                <path d="M2 12l10 5 10-5" />
-            </svg>
+<div class="w-64 bg-indigo-900 shadow-xl flex flex-col transition-all duration-300 relative z-20">
+    <!-- Header/Logo Area -->
+    <div class="p-6 border-b border-indigo-800/50 flex items-center justify-center">
+        <div class="flex items-center gap-3">
+            <div
+                class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg transform rotate-3">
+                <span class="text-white font-bold text-xl">S</span>
+            </div>
+            <div>
+                <h1 class="text-white font-bold text-xl tracking-tight leading-none">Sertifikasi</h1>
+                <p class="text-indigo-300 text-[10px] uppercase tracking-wider font-semibold mt-1">Sistem Informasi</p>
+            </div>
         </div>
-        <div class="logo-text">SertifikasiApp</div>
     </div>
 
-    <div class="nav-container">
-        <div class="nav-label">Menu Utama</div>
+    <!-- Navigation Area -->
+    <div class="flex-1 overflow-y-auto py-6 px-4 space-y-2">
 
-        <a href="javascript:void(0)" class="nav-item active"
-            onclick="setActive(this, 'Dashboard', 'page-dashboard', event)">
-            <!-- Dashboard Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="7" height="7"></rect>
-                <rect x="14" y="3" width="7" height="7"></rect>
-                <rect x="14" y="14" width="7" height="7"></rect>
-                <rect x="3" y="14" width="7" height="7"></rect>
-            </svg>
-            <span>Dashboard</span>
+        <!-- Dashboard Link -->
+        <a href="#" onclick="openSubPage('page-dashboard', 'Dashboard'); return false;"
+            class="group flex items-center gap-3 px-4 py-3 rounded-xl text-indigo-100 font-medium transition-all duration-200 hover:bg-indigo-800/50 hover:text-white">
+            <div
+                class="w-8 h-8 rounded-lg bg-indigo-800/50 flex items-center justify-center text-lg group-hover:bg-indigo-500 group-hover:scale-110 transition-all">
+                📊
+            </div>
+            Dashboard
         </a>
 
-        <a href="javascript:void(0)" class="nav-item"
-            onclick="setActive(this, 'Data Sertifikat', 'page-period-dashboard', event)">
-            <!-- Certificate/Archive Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10 9 9 9 8 9"></polyline>
-            </svg>
-            <span>Data Sertifikat</span>
+        <div class="pt-4 pb-2">
+            <p class="px-4 text-xs font-bold text-indigo-400 uppercase tracking-wider">Manajemen Data</p>
+        </div>
+
+        <!-- Perencanaan Link -->
+        <a href="#" onclick="openSubPage('page-perencanaan', 'Perencanaan Pelatihan'); return false;"
+            class="group flex items-center gap-3 px-4 py-3 rounded-xl text-indigo-100 font-medium transition-all duration-200 hover:bg-indigo-800/50 hover:text-white">
+            <div
+                class="w-8 h-8 rounded-lg bg-indigo-800/50 flex items-center justify-center text-lg group-hover:bg-indigo-500 group-hover:scale-110 transition-all">
+                📅
+            </div>
+            Perencanaan
         </a>
 
-        <div class="nav-label" style="margin-top: 24px;">Laporan & Analisis</div>
-
-        <a href="javascript:void(0)" class="nav-item" onclick="setActive(this, 'Analisis', 'page-analisis', event)">
-            <!-- Bar Chart/Analysis Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="20" x2="18" y2="10"></line>
-                <line x1="12" y1="20" x2="12" y2="4"></line>
-                <line x1="6" y1="20" x2="6" y2="14"></line>
-            </svg>
-            <span>Analisis</span>
+        <!-- Pelaksanaan Link -->
+        <a href="#" onclick="openSubPage('page-pelaksanaan', 'Data Pelaksanaan'); return false;"
+            class="group flex items-center gap-3 px-4 py-3 rounded-xl text-indigo-100 font-medium transition-all duration-200 hover:bg-indigo-800/50 hover:text-white">
+            <div
+                class="w-8 h-8 rounded-lg bg-indigo-800/50 flex items-center justify-center text-lg group-hover:bg-indigo-500 group-hover:scale-110 transition-all">
+                🏃
+            </div>
+            Pelaksanaan
         </a>
 
-        <a href="javascript:void(0)" class="nav-item" onclick="setActive(this, 'Laporan', 'page-laporan', event)">
-            <!-- File Text/Report Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10 9 9 9 8 9"></polyline>
-            </svg>
-            <span>Laporan</span>
+        <!-- Evaluasi Link -->
+        <a href="#" onclick="openSubPage('page-evaluasi', 'Evaluasi Pembelajaran'); return false;"
+            class="group flex items-center gap-3 px-4 py-3 rounded-xl text-indigo-100 font-medium transition-all duration-200 hover:bg-indigo-800/50 hover:text-white">
+            <div
+                class="w-8 h-8 rounded-lg bg-indigo-800/50 flex items-center justify-center text-lg group-hover:bg-indigo-500 group-hover:scale-110 transition-all">
+                📋
+            </div>
+            Evaluasi Data
         </a>
 
-        <div class="nav-label" style="margin-top: 24px;">Sistem</div>
+        <div class="pt-4 pb-2">
+            <p class="px-4 text-xs font-bold text-indigo-400 uppercase tracking-wider">Laporan & Insight</p>
+        </div>
 
-        <a href="javascript:void(0)" class="nav-item" onclick="setActive(this, 'Pengaturan', 'page-pengaturan', event)">
-            <!-- Settings Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path
-                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-                </path>
-            </svg>
-            <span>Pengaturan</span>
+        <!-- Analisis Link -->
+        <a href="#" onclick="openSubPage('page-analisis', 'Analisis Data'); return false;"
+            class="group flex items-center gap-3 px-4 py-3 rounded-xl text-indigo-100 font-medium transition-all duration-200 hover:bg-indigo-800/50 hover:text-white">
+            <div
+                class="w-8 h-8 rounded-lg bg-indigo-800/50 flex items-center justify-center text-lg group-hover:bg-indigo-500 group-hover:scale-110 transition-all">
+                📈
+            </div>
+            Analisis Data
         </a>
+
+        <!-- Laporan Link -->
+        <a href="#" onclick="openSubPage('page-laporan', 'Laporan Data'); return false;"
+            class="group flex items-center gap-3 px-4 py-3 rounded-xl text-indigo-100 font-medium transition-all duration-200 hover:bg-indigo-800/50 hover:text-white">
+            <div
+                class="w-8 h-8 rounded-lg bg-indigo-800/50 flex items-center justify-center text-lg group-hover:bg-indigo-500 group-hover:scale-110 transition-all">
+                📥
+            </div>
+            Laporan & Ekspor
+        </a>
+
     </div>
 
-    <div class="user-profile">
-        <div class="avatar"></div>
-        <div class="user-info">
-            <h4>Admin</h4>
-            <p>Administrator</p>
+    <!-- User Profile Area (Bottom) -->
+    <div class="p-4 border-t border-indigo-800/50">
+        <div class="bg-indigo-800/30 rounded-xl p-3 flex items-center gap-3 border border-indigo-700/50">
+            <div
+                class="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold shadow-inner">
+                A
+            </div>
+            <div class="flex-1 overflow-hidden">
+                <p class="text-sm font-bold text-white truncate">Admin User</p>
+                <p class="text-indigo-300 text-xs truncate">Super Admin</p>
+            </div>
         </div>
     </div>
 </div>
-
-<div class="mobile-toggle" onclick="toggleSidebar()">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-</div>
-
-<script>
-    function setActive(element, pageName, targetId, event) {
-        if (event) {
-            event.preventDefault();
-        }
-
-        // Remove active class from all items
-        const items = document.querySelectorAll('.nav-item');
-        items.forEach(item => item.classList.remove('active'));
-
-        // Add active class to clicked item
-        element.classList.add('active');
-
-        // IF openSubPage exists (defined in Index.html), use it!
-        // This ensures specific page logic (like rendering cards) runs.
-        if (typeof openSubPage === 'function') {
-            openSubPage(targetId, pageName);
-        } else {
-            // Fallback for standalone testing or if Index.html undefined
-            console.warn('openSubPage not found. Using simple fallback.');
-
-            // Update dashboard content title
-            const titleEl = document.getElementById('page-title');
-            const descEl = document.getElementById('page-description');
-
-            if (titleEl) titleEl.innerText = pageName;
-
-            let desc = 'Mengelola ' + pageName;
-            if (pageName === 'Dashboard') desc = 'Ringkasan Aktivitas dan Statistik Sertifikasi';
-            if (descEl) descEl.innerText = desc;
-
-            // Hide all content sections
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(section => section.style.display = 'none');
-
-            // Show the target section
-            if (targetId) {
-                const targetSection = document.getElementById(targetId);
-                if (targetSection) {
-                    targetSection.style.display = 'block';
-                }
-            }
-        }
-
-        // Close sidebar ONLY on mobile screens (less than or equal to 768px)
-        if (window.innerWidth <= 768) {
-            // Small timeout to allow the user to see the click effect
-            setTimeout(() => {
-                const sidebar = document.getElementById('sidebar');
-                if (sidebar && sidebar.classList.contains('open')) {
-                    toggleSidebar();
-                }
-            }, 100);
-        }
-    }
-
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('open');
-    }
